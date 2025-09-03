@@ -15,9 +15,15 @@ const Resume = () => {
               <ArrowLeft className="w-4 h-4" />
               Back to Menu
             </Button>
-            <Button variant="default" className="flex items-center gap-2">
-              <Download className="w-4 h-4" />
-              Download PDF
+            <Button asChild variant="default" className="flex items-center gap-2">
+              <a 
+                href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/resume-pdfs/Resume_Felipe_Tala.pdf`}
+                download="Resume_Felipe_Tala.pdf"
+                className="flex items-center gap-2"
+              >
+                <Download className="w-4 h-4" />
+                Download PDF
+              </a>
             </Button>
           </div>
 
@@ -30,12 +36,30 @@ const Resume = () => {
             </CardHeader>
             
             <CardContent>
-              <div className="w-full h-[800px] border rounded-lg overflow-hidden">
-                <iframe
-                  src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/resume-pdfs/Resume_Felipe_Tala.pdf`}
+              <div className="w-full h-[800px] border rounded-lg overflow-hidden bg-muted">
+                <object
+                  data={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/resume-pdfs/Resume_Felipe_Tala.pdf`}
+                  type="application/pdf"
                   className="w-full h-full"
                   title="Felipe Tala Resume"
-                />
+                >
+                  <embed
+                    src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/resume-pdfs/Resume_Felipe_Tala.pdf`}
+                    type="application/pdf"
+                    className="w-full h-full"
+                  />
+                  <p className="p-4 text-center">
+                    Your browser doesn't support PDF viewing. 
+                    <a 
+                      href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/resume-pdfs/Resume_Felipe_Tala.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="text-primary underline ml-1"
+                    >
+                      Click here to view the PDF
+                    </a>
+                  </p>
+                </object>
               </div>
               
               <div className="mt-4 text-center">

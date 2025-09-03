@@ -1,7 +1,7 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Badge } from "@/components/ui/badge";
-import { ArrowLeft, ExternalLink, Github, Image, FileText, Plus } from "lucide-react";
+import { ArrowLeft, ExternalLink, Github, Image, FileText, Plus, Download } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const WorkProjects = () => {
@@ -75,14 +75,42 @@ const WorkProjects = () => {
                 <CardTitle className="text-2xl text-primary">Optical Transceiver Project</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-[600px] border rounded-lg overflow-hidden mb-4">
-                  <iframe
-                    src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
+                <div className="w-full h-[600px] border rounded-lg overflow-hidden mb-4 bg-muted">
+                  <object
+                    data={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
+                    type="application/pdf"
                     className="w-full h-full"
                     title="Optical Transceiver Project Documentation"
-                  />
+                  >
+                    <embed
+                      src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
+                      type="application/pdf"
+                      className="w-full h-full"
+                    />
+                    <p className="p-4 text-center">
+                      Your browser doesn't support PDF viewing. 
+                      <a 
+                        href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary underline ml-1"
+                      >
+                        Click here to view the PDF
+                      </a>
+                    </p>
+                  </object>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center gap-4">
+                  <Button asChild variant="outline">
+                    <a 
+                      href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
+                      download="Optical_Transceiver_Project.pdf"
+                      className="flex items-center gap-2"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download PDF
+                    </a>
+                  </Button>
                   <Button asChild variant="outline">
                     <a 
                       href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
@@ -104,14 +132,42 @@ const WorkProjects = () => {
                 <CardTitle className="text-2xl text-primary">Power Supply & Rectifier Project</CardTitle>
               </CardHeader>
               <CardContent>
-                <div className="w-full h-[600px] border rounded-lg overflow-hidden mb-4">
-                  <iframe
-                    src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
+                <div className="w-full h-[600px] border rounded-lg overflow-hidden mb-4 bg-muted">
+                  <object
+                    data={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
+                    type="application/pdf"
                     className="w-full h-full"
                     title="Power Supply & Rectifier Project Documentation"
-                  />
+                  >
+                    <embed
+                      src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
+                      type="application/pdf"
+                      className="w-full h-full"
+                    />
+                    <p className="p-4 text-center">
+                      Your browser doesn't support PDF viewing. 
+                      <a 
+                        href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
+                        target="_blank"
+                        rel="noopener noreferrer"
+                        className="text-primary underline ml-1"
+                      >
+                        Click here to view the PDF
+                      </a>
+                    </p>
+                  </object>
                 </div>
-                <div className="flex justify-center">
+                <div className="flex justify-center gap-4">
+                  <Button asChild variant="outline">
+                    <a 
+                      href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
+                      download="Power_Supply_&_Rectifier_Project.pdf"
+                      className="flex items-center gap-2"
+                    >
+                      <Download className="w-4 h-4" />
+                      Download PDF
+                    </a>
+                  </Button>
                   <Button asChild variant="outline">
                     <a 
                       href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
