@@ -1,6 +1,6 @@
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
-import { ArrowLeft, Mail, Phone, MapPin, Github, Linkedin, Twitter } from "lucide-react";
+import { ArrowLeft, Mail, MapPin, Github, Linkedin } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 
 const About = () => {
@@ -19,10 +19,10 @@ const About = () => {
 
           <div className="text-center mb-12">
             <h1 className="text-4xl font-bold bg-portfolio-gradient bg-clip-text text-transparent mb-4">
-              About Felipe Tala
+              Welcome!
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              Software developer, problem solver, and lifelong learner passionate about creating meaningful digital experiences.
+              Hardware developer, problem solver, and lifelong learner passionate about creating devices and programs that facilitate our lives.
             </p>
           </div>
 
@@ -39,18 +39,14 @@ const About = () => {
                   <div>
                     <h2 className="text-2xl font-semibold mb-4 text-primary">Hello, I'm Felipe!</h2>
                     <p className="text-muted-foreground leading-relaxed mb-4">
-                      I'm a passionate software developer with over 4 years of experience in creating web applications 
-                      that make a difference. My journey in tech started with a curiosity about how things work and 
-                      evolved into a deep love for crafting elegant solutions to complex problems.
+                      I'm a passionate harware developer graduated in May 2025, with a background in Electronics Engineering and Physics. My journey in tech started with a curiosity about how things work and 
+                      evolved into a deep love for crafting elegant solutions to complex problems, applying first principle approach. I am passionate about abosrbing and applying new knowledge, both within and in different fields to mine.
                     </p>
                     <p className="text-muted-foreground leading-relaxed mb-4">
-                      I specialize in modern web technologies including React, TypeScript, and Node.js, but I'm always 
-                      eager to learn new tools and frameworks that can help me build better software. I believe in 
-                      writing clean, maintainable code and creating user experiences that are both functional and delightful.
+                      I specialize in electronics prototyping and bringup, FPGA development, and aim to understand new topics on a deep level.
                     </p>
                     <p className="text-muted-foreground leading-relaxed">
-                      Beyond coding, I'm passionate about mentoring other developers, contributing to open source projects, 
-                      and staying up-to-date with the latest industry trends and best practices.
+                      Beyond electronics, I enjoy jogging, reading in nature, and sharing mates with friends 🧉. I believe random acts of kindness make a better world for us; from high-fiving a stranger, to sharing food with someone in the street, small actions can change people's days.
                     </p>
                   </div>
                 </div>
@@ -68,25 +64,25 @@ const About = () => {
                 <div>
                   <h3 className="text-lg font-semibold mb-2 text-accent">Continuous Learning</h3>
                   <p className="text-muted-foreground text-sm">
-                    Technology evolves rapidly, and I believe in staying curious and continuously expanding my skillset.
+                    Technology evolves rapidly, meaning one should stay curious and with a continuously expanding skillset.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2 text-accent">User-Centered Design</h3>
                   <p className="text-muted-foreground text-sm">
-                    Every line of code should serve a purpose and contribute to a better user experience.
+                    Nature is the best teacher for developing groundbreaking, positive technologies. Da Vinci's work is the perfect example.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2 text-accent">Collaboration</h3>
                   <p className="text-muted-foreground text-sm">
-                    Great software is built by great teams. I value open communication and shared learning.
+                    Great electronics are built by great teams. I value open communication, shared learning, and peer encouragement.
                   </p>
                 </div>
                 <div>
                   <h3 className="text-lg font-semibold mb-2 text-accent">Quality First</h3>
                   <p className="text-muted-foreground text-sm">
-                    I believe in doing things right the first time, with clean code and thorough testing.
+                    I believe in doing things right the first time. Be a perfectionist.
                   </p>
                 </div>
               </div>
@@ -96,7 +92,7 @@ const About = () => {
           {/* Contact Information */}
           <Card className="shadow-elegant">
             <CardHeader>
-              <CardTitle className="text-2xl">Get In Touch</CardTitle>
+              <CardTitle className="text-2xl">Contact</CardTitle>
             </CardHeader>
             <CardContent>
               <div className="grid grid-cols-1 md:grid-cols-2 gap-6">
@@ -104,10 +100,6 @@ const About = () => {
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-accent" />
                     <span>felipe.tala@email.com</span>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Phone className="w-5 h-5 text-accent" />
-                    <span>+1 (555) 123-4567</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="w-5 h-5 text-accent" />
@@ -125,12 +117,6 @@ const About = () => {
                     <Linkedin className="w-5 h-5 text-accent" />
                     <a href="#" className="hover:text-accent transition-colors">
                       linkedin.com/in/felipetala
-                    </a>
-                  </div>
-                  <div className="flex items-center gap-3">
-                    <Twitter className="w-5 h-5 text-accent" />
-                    <a href="#" className="hover:text-accent transition-colors">
-                      @felipetala
                     </a>
                   </div>
                 </div>
