@@ -68,9 +68,9 @@ const About = () => {
                   </p>
                 </div>
                 <div>
-                  <h3 className="text-lg font-semibold mb-2 text-accent">User-Centered Design</h3>
+                  <h3 className="text-lg font-semibold mb-2 text-accent">Nature and Technology</h3>
                   <p className="text-muted-foreground text-sm">
-                    Nature is the best teacher for developing groundbreaking, positive technologies. Da Vinci's work is the perfect example.
+                    Nature is the best teacher for developing groundbreaking technologies with positive impact. Da Vinci's work is the perfect example.
                   </p>
                 </div>
                 <div>
