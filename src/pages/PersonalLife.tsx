@@ -1,0 +1,155 @@
+import { Button } from "@/components/ui/button";
+import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+import { ArrowLeft, Plus, Image as ImageIcon, Calendar } from "lucide-react";
+import { useNavigate } from "react-router-dom";
+
+const PersonalLife = () => {
+  const navigate = useNavigate();
+
+  const photoGallery = [
+    {
+      id: 1,
+      title: "Mountain Hiking Adventure",
+      date: "2024-01-15",
+      description: "Amazing weekend hike through the Rockies with friends",
+      image: "/placeholder.svg"
+    },
+    {
+      id: 2,
+      title: "Family Vacation",
+      date: "2023-12-20",
+      description: "Holiday trip to the coast with the family",
+      image: "/placeholder.svg"
+    },
+    {
+      id: 3,
+      title: "Tech Conference 2023",
+      date: "2023-11-10",
+      description: "Speaking at the annual developers conference",
+      image: "/placeholder.svg"
+    },
+    {
+      id: 4,
+      title: "Cooking Experiment",
+      date: "2023-10-05",
+      description: "Trying out a new recipe for homemade pasta",
+      image: "/placeholder.svg"
+    },
+    {
+      id: 5,
+      title: "Beach Sunset",
+      date: "2023-09-22",
+      description: "Perfect sunset captured during a peaceful evening walk",
+      image: "/placeholder.svg"
+    },
+    {
+      id: 6,
+      title: "Pet Adventures",
+      date: "2023-08-18",
+      description: "Fun day at the dog park with my furry friend",
+      image: "/placeholder.svg"
+    }
+  ];
+
+  const interests = [
+    "Photography", "Hiking", "Cooking", "Travel", "Music", "Reading", "Gaming", "Fitness"
+  ];
+
+  return (
+    <div className="min-h-screen bg-portfolio-gradient-subtle">
+      <div className="container mx-auto px-4 py-8">
+        <div className="max-w-6xl mx-auto">
+          <div className="flex items-center justify-between mb-8">
+            <Button variant="outline" onClick={() => navigate("/")} className="flex items-center gap-2">
+              <ArrowLeft className="w-4 h-4" />
+              Back to Menu
+            </Button>
+            <Button variant="default" className="flex items-center gap-2">
+              <Plus className="w-4 h-4" />
+              Add Photos
+            </Button>
+          </div>
+
+          <div className="text-center mb-12">
+            <h1 className="text-4xl font-bold bg-portfolio-gradient bg-clip-text text-transparent mb-4">
+              Personal Life
+            </h1>
+            <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
+              A glimpse into my life outside of work - the moments, adventures, and experiences that shape who I am.
+            </p>
+          </div>
+
+          {/* Interests Section */}
+          <Card className="shadow-elegant mb-8">
+            <CardHeader>
+              <CardTitle className="text-2xl">Interests & Hobbies</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <div className="flex flex-wrap gap-3">
+                {interests.map((interest) => (
+                  <span key={interest} className="px-4 py-2 bg-accent/10 text-accent rounded-full text-sm font-medium">
+                    {interest}
+                  </span>
+                ))}
+              </div>
+            </CardContent>
+          </Card>
+
+          {/* Photo Gallery */}
+          <div className="mb-8">
+            <h2 className="text-2xl font-semibold mb-6">Photo Gallery</h2>
+            <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+              {photoGallery.map((photo) => (
+                <Card key={photo.id} className="shadow-card hover:shadow-elegant transition-all duration-300 group cursor-pointer">
+                  <CardContent className="p-0">
+                    <div className="aspect-square bg-secondary rounded-t-lg flex items-center justify-center group-hover:bg-secondary/80 transition-colors">
+                      <ImageIcon className="w-16 h-16 text-muted-foreground" />
+                    </div>
+                    <div className="p-4">
+                      <h3 className="font-semibold mb-2">{photo.title}</h3>
+                      <p className="text-sm text-muted-foreground mb-3">{photo.description}</p>
+                      <div className="flex items-center gap-1 text-xs text-muted-foreground">
+                        <Calendar className="w-3 h-3" />
+                        {new Date(photo.date).toLocaleDateString()}
+                      </div>
+                    </div>
+                  </CardContent>
+                </Card>
+              ))}
+            </div>
+          </div>
+
+          {/* Add Photos Section */}
+          <Card className="shadow-elegant border-dashed border-2">
+            <CardContent className="py-12 text-center">
+              <ImageIcon className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
+              <h3 className="text-xl font-semibold mb-2">Add New Photos</h3>
+              <p className="text-muted-foreground mb-6">
+                Share your latest adventures and memorable moments with a photo upload.
+              </p>
+              <Button variant="default">Upload Photos</Button>
+            </CardContent>
+          </Card>
+
+          {/* About Me Section */}
+          <Card className="shadow-elegant mt-8">
+            <CardHeader>
+              <CardTitle className="text-2xl">About Me</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-muted-foreground leading-relaxed">
+                When I'm not coding, you'll find me exploring the great outdoors, experimenting in the kitchen, 
+                or capturing life's beautiful moments through photography. I believe in maintaining a healthy 
+                work-life balance and am passionate about continuous learning, whether it's mastering a new 
+                programming language or trying a new hiking trail. Family and friends are incredibly important 
+                to me, and I love creating lasting memories with the people I care about most.
+              </p>
+            </CardContent>
+          </Card>
+        </div>
+      </div>
+    </div>
+  );
+};
+
+export default PersonalLife;
