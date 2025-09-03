@@ -63,80 +63,70 @@ const WorkProjects = () => {
               Work & Projects
             </h1>
             <p className="text-xl text-muted-foreground max-w-2xl mx-auto">
-              A collection of my professional work and personal projects, showcasing various technologies and problem-solving approaches.
+              My engineering project documentation and technical work.
             </p>
           </div>
 
-          <div className="grid grid-cols-1 lg:grid-cols-2 gap-8">
-            {projects.map((project) => (
-              <Card key={project.id} className="shadow-elegant hover:shadow-lg transition-all duration-300">
-                <CardHeader className="pb-4">
-                  <div className="aspect-video bg-secondary rounded-lg mb-4 flex items-center justify-center">
-                    <Image className="w-16 h-16 text-muted-foreground" />
-                  </div>
-                  <div className="flex items-start justify-between">
-                    <CardTitle className="text-xl">{project.title}</CardTitle>
-                    <Badge variant={project.status === "Completed" ? "default" : "secondary"}>
-                      {project.status}
-                    </Badge>
-                  </div>
-                </CardHeader>
+          {/* Project PDFs Display */}
+          <div className="space-y-8">
+            {/* Optical Transceiver Project */}
+            <Card className="shadow-elegant">
+              <CardHeader>
+                <CardTitle className="text-2xl text-primary">Optical Transceiver Project</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="w-full h-[600px] border rounded-lg overflow-hidden mb-4">
+                  <iframe
+                    src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
+                    className="w-full h-full"
+                    title="Optical Transceiver Project Documentation"
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <Button asChild variant="outline">
+                    <a 
+                      href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Optical_Transceiver_Project.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Open in New Tab
+                    </a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
 
-                <CardContent className="space-y-4">
-                  <p className="text-muted-foreground text-sm leading-relaxed">
-                    {project.description}
-                  </p>
-
-                  <div className="flex flex-wrap gap-2">
-                    {project.technologies.map((tech) => (
-                      <Badge key={tech} variant="outline" className="text-xs">
-                        {tech}
-                      </Badge>
-                    ))}
-                  </div>
-
-                  {project.files.length > 0 && (
-                    <div className="space-y-2">
-                      <h4 className="text-sm font-semibold text-muted-foreground">Project Files:</h4>
-                      <div className="space-y-1">
-                        {project.files.map((file, index) => (
-                          <div key={index} className="flex items-center gap-2 text-sm text-muted-foreground">
-                            <FileText className="w-4 h-4" />
-                            <span>{file}</span>
-                          </div>
-                        ))}
-                      </div>
-                    </div>
-                  )}
-
-                  <div className="flex gap-2 pt-4">
-                    <Button variant="outline" size="sm" className="flex items-center gap-2">
-                      <Github className="w-4 h-4" />
-                      Code
-                    </Button>
-                    {project.liveUrl && (
-                      <Button variant="default" size="sm" className="flex items-center gap-2">
-                        <ExternalLink className="w-4 h-4" />
-                        Live Demo
-                      </Button>
-                    )}
-                  </div>
-                </CardContent>
-              </Card>
-            ))}
+            {/* Power Supply & Rectifier Project */}
+            <Card className="shadow-elegant">
+              <CardHeader>
+                <CardTitle className="text-2xl text-primary">Power Supply & Rectifier Project</CardTitle>
+              </CardHeader>
+              <CardContent>
+                <div className="w-full h-[600px] border rounded-lg overflow-hidden mb-4">
+                  <iframe
+                    src={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
+                    className="w-full h-full"
+                    title="Power Supply & Rectifier Project Documentation"
+                  />
+                </div>
+                <div className="flex justify-center">
+                  <Button asChild variant="outline">
+                    <a 
+                      href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/project-pdfs/Power_Supply_&_Rectifier_Project.pdf`}
+                      target="_blank"
+                      rel="noopener noreferrer"
+                      className="flex items-center gap-2"
+                    >
+                      <ExternalLink className="w-4 h-4" />
+                      Open in New Tab
+                    </a>
+                  </Button>
+                </div>
+              </CardContent>
+            </Card>
           </div>
-
-          {/* Add Project Section */}
-          <Card className="shadow-elegant mt-8 border-dashed border-2">
-            <CardContent className="py-12 text-center">
-              <Plus className="w-16 h-16 text-muted-foreground mx-auto mb-4" />
-              <h3 className="text-xl font-semibold mb-2">Add New Project</h3>
-              <p className="text-muted-foreground mb-6">
-                Upload project files, add descriptions, and showcase your latest work.
-              </p>
-              <Button variant="default">Create Project</Button>
-            </CardContent>
-          </Card>
         </div>
       </div>
     </div>
