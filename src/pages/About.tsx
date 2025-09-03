@@ -99,7 +99,7 @@ const About = () => {
                 <div className="space-y-4">
                   <div className="flex items-center gap-3">
                     <Mail className="w-5 h-5 text-accent" />
-                    <span>felipe.tala@email.com</span>
+                    <span>felipetala@ku.edu</span>
                   </div>
                   <div className="flex items-center gap-3">
                     <MapPin className="w-5 h-5 text-accent" />
