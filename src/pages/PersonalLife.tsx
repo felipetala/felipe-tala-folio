@@ -11,28 +11,28 @@ const PersonalLife = () => {
       id: 1,
       title: "Mountain Hiking Adventure",
       date: "2024-01-15",
-      description: "Amazing weekend hike through the Rockies with friends",
+      description: "Joined friends on a 3 day trip a week in advance; ended up climbing a 14k ft mountain",
       image: "/placeholder.svg"
     },
     {
       id: 2,
-      title: "Family Vacation",
+      title: "Family RV Vacation",
       date: "2023-12-20",
-      description: "Holiday trip to the coast with the family",
+      description: "Post graduation family RV trip to Yosemite and Carmel",
       image: "/placeholder.svg"
     },
     {
       id: 3,
-      title: "Tech Conference 2023",
+      title: "Building Ternary Device",
       date: "2023-11-10",
       description: "Speaking at the annual developers conference",
       image: "/placeholder.svg"
     },
     {
       id: 4,
-      title: "Cooking Experiment",
+      title: "Venice Beach Sunset",
       date: "2023-10-05",
-      description: "Trying out a new recipe for homemade pasta",
+      description: "Sharing mate with friends in the beach",
       image: "/placeholder.svg"
     },
     {
@@ -52,7 +52,7 @@ const PersonalLife = () => {
   ];
 
   const interests = [
-    "Photography", "Hiking", "Cooking", "Travel", "Music", "Reading", "Gaming", "Fitness"
+    "Hardware development", "Reading", "Jogging", "Travel", "Jogging", "Martial Arts", "Rock Climbing"
   ];
 
   return (
@@ -138,11 +138,12 @@ const PersonalLife = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-                When I'm not coding, you'll find me exploring the great outdoors, experimenting in the kitchen, 
-                or capturing life's beautiful moments through photography. I believe in maintaining a healthy 
-                work-life balance and am passionate about continuous learning, whether it's mastering a new 
-                programming language or trying a new hiking trail. Family and friends are incredibly important 
-                to me, and I love creating lasting memories with the people I care about most.
+                Outside of the lab and office, you'll find me sharing conversations and mate with friends, reading,
+                mediating, or jogging. I believe in maintaining a healthy mind to overperform and achieve working
+                flow state. I am passionate about continuous learning, whether it's mastering a new 
+                development skill or trying a new jogging path. Novelty keeps the mind fresh, creative and active.
+                Family and friends are incredibly important to me, and I love being consciouss of when we are
+                living a lasting memory with the people I care about most.
               </p>
             </CardContent>
           </Card>
