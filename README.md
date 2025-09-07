@@ -1,4 +1,4 @@
-# Welcome to your Felipe Tala's Personal Webpage Projcet
+# Welcome to Felipe Tala's Personal Webpage Projcet
 
 Hi, my name is Felipe. People would describe me as a down to Earth, "man of the people".
 I enjoy having real connections with high-purposed people, and learning their stories and motivations.
