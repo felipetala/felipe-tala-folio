@@ -2,7 +2,8 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Loader2, RefreshCw } from "lucide-react";
+import { Alert, AlertDescription } from "@/components/ui/alert";
+import { ArrowLeft, Loader2, RefreshCw, AlertCircle, CheckCircle2 } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import PhotoCollage from "@/components/PhotoCollage";
@@ -14,6 +15,7 @@ const PersonalLife = () => {
   const [collections, setCollections] = useState<PhotoCollection[]>([]);
   const [loading, setLoading] = useState(true);
   const [activeCategory, setActiveCategory] = useState("all");
+  const [connectionStatus, setConnectionStatus] = useState<'connected' | 'error' | 'loading'>('loading');
 
   const interests = [
     "Hardware development", "Reading", "Jogging", "Travel", "Martial Arts", "Rock Climbing"
@@ -22,23 +24,35 @@ const PersonalLife = () => {
   const fetchCollections = async () => {
     try {
       setLoading(true);
+      setConnectionStatus('loading');
       
       // Fetch collections from Supabase storage bucket
       const fetchedCollections = await fetchPhotoCollections();
       setCollections(fetchedCollections);
       
       if (fetchedCollections.length === 0) {
+        setConnectionStatus('error');
         toast({
           title: "No photos found",
-          description: "Upload photos to the Supabase bucket to display them here.",
+          description: "Please check if photos are uploaded to the Supabase bucket.",
           variant: "default",
         });
+      } else {
+        setConnectionStatus('connected');
+        // Show success toast only on refresh, not initial load
+        if (!loading) {
+          toast({
+            title: "Photos refreshed",
+            description: `Loaded ${fetchedCollections.length} collection${fetchedCollections.length > 1 ? 's' : ''}`,
+          });
+        }
       }
     } catch (error) {
       console.error('Error fetching collections:', error);
+      setConnectionStatus('error');
       toast({
-        title: "Error loading photos",
-        description: "Failed to load photo collections. Using sample data.",
+        title: "Connection error",
+        description: "Unable to connect to photo storage. Showing sample galleries.",
         variant: "destructive",
       });
     } finally {
@@ -100,6 +114,25 @@ const PersonalLife = () => {
               A glimpse into my life outside of work - the moments, adventures, and experiences that shape who I am.
             </p>
           </div>
+
+          {/* Connection Status Alert */}
+          {connectionStatus === 'error' && (
+            <Alert className="mb-6 border-orange-200 bg-orange-50">
+              <AlertCircle className="h-4 w-4 text-orange-600" />
+              <AlertDescription className="text-orange-800">
+                Currently showing sample photos. Connect to Supabase to display your actual photo collections.
+              </AlertDescription>
+            </Alert>
+          )}
+          
+          {connectionStatus === 'connected' && collections.length > 0 && (
+            <Alert className="mb-6 border-green-200 bg-green-50">
+              <CheckCircle2 className="h-4 w-4 text-green-600" />
+              <AlertDescription className="text-green-800">
+                Connected to Supabase. Displaying {collections.length} photo collection{collections.length > 1 ? 's' : ''}.
+              </AlertDescription>
+            </Alert>
+          )}
 
           {/* Interests Section */}
           <Card className="shadow-elegant mb-8">

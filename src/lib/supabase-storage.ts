@@ -82,12 +82,21 @@ export async function fetchPhotosFromFolder(folderPath: string): Promise<Storage
 
 /**
  * Gets the public URL for a file in the photos bucket
+ * Adds image transformation parameters for optimization
  */
-export function getPhotoUrl(filePath: string): string {
+export function getPhotoUrl(filePath: string, options?: { width?: number; quality?: number }): string {
   const { data } = supabase
     .storage
     .from('photos')
     .getPublicUrl(filePath);
+  
+  // Add transformation parameters for optimization
+  if (options?.width || options?.quality) {
+    const params = new URLSearchParams();
+    if (options.width) params.append('width', options.width.toString());
+    if (options.quality) params.append('quality', (options.quality || 75).toString());
+    return `${data.publicUrl}?${params.toString()}`;
+  }
   
   return data.publicUrl;
 }
@@ -132,8 +141,8 @@ export async function fetchPhotoCollections(): Promise<PhotoCollection[]> {
         if (imageFiles.length > 0) {
           const collectionPhotos: Photo[] = imageFiles.map((file, index) => ({
             id: file.id || `${config.folderName}-${index}`,
-            url: getPhotoUrl(`${folderPath}/${file.name}`),
-            caption: file.name.replace(/\.[^/.]+$/, "").replace(/-/g, ' '),
+            url: getPhotoUrl(`${folderPath}/${file.name}`, { width: 1200, quality: 85 }),
+            caption: file.name.replace(/\.[^/.]+$/, "").replace(/-/g, ' ').replace(/_/g, ' '),
             order_index: index + 1
           }));
 

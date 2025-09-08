@@ -1,7 +1,8 @@
-import { useState } from "react";
+import { useState, useEffect } from "react";
 import { Card, CardContent } from "@/components/ui/card";
 import { Dialog, DialogContent, DialogHeader, DialogTitle } from "@/components/ui/dialog";
-import { ChevronLeft, ChevronRight, X, Calendar, MapPin } from "lucide-react";
+import { Skeleton } from "@/components/ui/skeleton";
+import { ChevronLeft, ChevronRight, X, Calendar, MapPin, ImageOff } from "lucide-react";
 
 interface Photo {
   id: string;
@@ -22,9 +23,15 @@ interface PhotoCollageProps {
 const PhotoCollage = ({ title, description, date, location, photos }: PhotoCollageProps) => {
   const [selectedPhotoIndex, setSelectedPhotoIndex] = useState<number | null>(null);
   const [imageLoadErrors, setImageLoadErrors] = useState<Set<string>>(new Set());
+  const [imageLoadStates, setImageLoadStates] = useState<Record<string, boolean>>({});
 
   const handleImageError = (photoId: string) => {
     setImageLoadErrors(prev => new Set(prev).add(photoId));
+    setImageLoadStates(prev => ({ ...prev, [photoId]: true }));
+  };
+
+  const handleImageLoad = (photoId: string) => {
+    setImageLoadStates(prev => ({ ...prev, [photoId]: true }));
   };
 
   const openLightbox = (index: number) => {
@@ -99,20 +106,30 @@ const PhotoCollage = ({ title, description, date, location, photos }: PhotoColla
             {displayPhotos.map((photo, index) => (
               <div
                 key={photo.id}
-                className={`${getLayoutClass(index, displayPhotos.length)} relative overflow-hidden rounded-lg cursor-pointer group`}
+                className={`${getLayoutClass(index, displayPhotos.length)} relative overflow-hidden rounded-lg cursor-pointer group bg-secondary`}
                 onClick={() => openLightbox(index)}
               >
+                {!imageLoadStates[photo.id] && !imageLoadErrors.has(photo.id) && (
+                  <div className="absolute inset-0 flex items-center justify-center">
+                    <Skeleton className="w-full h-full" />
+                  </div>
+                )}
+                
                 {!imageLoadErrors.has(photo.id) ? (
                   <img
                     src={photo.url}
                     alt={photo.caption || `Photo ${index + 1}`}
-                    className="w-full h-full object-cover transition-transform duration-300 group-hover:scale-110"
+                    className={`w-full h-full object-cover transition-all duration-300 group-hover:scale-110 ${
+                      imageLoadStates[photo.id] ? 'opacity-100' : 'opacity-0'
+                    }`}
                     onError={() => handleImageError(photo.id)}
+                    onLoad={() => handleImageLoad(photo.id)}
                     loading="lazy"
                   />
                 ) : (
-                  <div className="w-full h-full bg-secondary flex items-center justify-center">
-                    <span className="text-muted-foreground">Image unavailable</span>
+                  <div className="w-full h-full bg-secondary flex flex-col items-center justify-center gap-2">
+                    <ImageOff className="w-8 h-8 text-muted-foreground" />
+                    <span className="text-sm text-muted-foreground">Image unavailable</span>
                   </div>
                 )}
                 

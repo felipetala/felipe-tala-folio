@@ -19,46 +19,44 @@ export interface CollectionConfig {
 export const PHOTO_COLLECTIONS: CollectionConfig[] = [
   {
     folderName: 'family-rv-trip',
-    displayTitle: 'Family RV Vacation',
-    description: 'Post graduation family RV trip to Yosemite and Carmel',
+    displayTitle: 'Family RV Adventure',
+    description: 'Memorable road trip experiences with family, exploring the open road and creating lasting memories',
     category: 'family',
-    date: '2023-12-20',
-    enabled: true
-  },
-  {
-    folderName: 'mountain-hiking',
-    displayTitle: 'Mountain Hiking Adventure',
-    description: 'Joined friends on a 3 day trip; ended up climbing a 14k ft mountain',
-    category: 'travel',
-    date: '2024-01-15',
+    date: '2024-07-15',
     enabled: true
   },
   {
     folderName: 'venice-beach',
-    displayTitle: 'Venice Beach Sunset',
-    description: 'Sharing mate with friends at the beach',
+    displayTitle: 'Venice Beach Moments',
+    description: 'Sun, sand, and unforgettable times at Venice Beach with friends and the vibrant local culture',
     category: 'travel',
-    date: '2023-10-05',
+    date: '2024-06-20',
     enabled: true
   },
   {
-    folderName: 'ternary-device',
-    displayTitle: 'Building Ternary Device',
-    description: 'Hardware development project exploring ternary computing',
-    category: 'hobbies',
-    date: '2023-11-10',
+    folderName: 'longs-peak-co',
+    displayTitle: 'Longs Peak Colorado',
+    description: 'Conquering the 14,259ft summit of Longs Peak - an incredible alpine adventure in Rocky Mountain National Park',
+    category: 'travel',
+    date: '2024-08-10',
     enabled: true
   },
   {
-    folderName: 'tech-conference-2024',
-    displayTitle: 'Tech Conference 2024',
-    description: 'Annual developers conference presentation',
+    folderName: 'diwali',
+    displayTitle: 'Diwali Celebrations',
+    description: 'Festival of Lights celebrations with family and friends, embracing tradition and joy',
     category: 'events',
-    date: '2024-03-10',
+    date: '2024-11-01',
     enabled: true
   },
-  // Add more collections as needed
-  // Set enabled: false to hide without deleting from bucket
+  {
+    folderName: 'family&friends',
+    displayTitle: 'Family & Friends',
+    description: 'Cherished moments with the people who matter most - capturing laughter, love, and togetherness',
+    category: 'family',
+    date: '2024-09-15',
+    enabled: true
+  }
 ];
 
 /**
