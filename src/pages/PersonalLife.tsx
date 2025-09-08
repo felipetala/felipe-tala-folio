@@ -2,41 +2,17 @@ import { useState, useEffect } from "react";
 import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
-import { ArrowLeft, Plus, Loader2 } from "lucide-react";
+import { ArrowLeft, Loader2, RefreshCw } from "lucide-react";
 import { useNavigate } from "react-router-dom";
-import { supabase } from "@/integrations/supabase/client";
 import { useToast } from "@/hooks/use-toast";
 import PhotoCollage from "@/components/PhotoCollage";
-import PhotoUpload from "@/components/PhotoUpload";
-import {
-  Dialog,
-  DialogContent,
-  DialogHeader,
-  DialogTitle,
-  DialogTrigger,
-} from "@/components/ui/dialog";
-
-interface PhotoCollection {
-  id: string;
-  title: string;
-  description: string | null;
-  date: string | null;
-  category: string | null;
-  cover_image: string | null;
-  photos: Array<{
-    id: string;
-    url: string;
-    caption: string | null;
-    order_index: number;
-  }>;
-}
+import { fetchPhotoCollections, PhotoCollection } from "@/lib/supabase-storage";
 
 const PersonalLife = () => {
   const navigate = useNavigate();
   const { toast } = useToast();
   const [collections, setCollections] = useState<PhotoCollection[]>([]);
   const [loading, setLoading] = useState(true);
-  const [uploadDialogOpen, setUploadDialogOpen] = useState(false);
   const [activeCategory, setActiveCategory] = useState("all");
 
   const interests = [
@@ -47,83 +23,24 @@ const PersonalLife = () => {
     try {
       setLoading(true);
       
-      // Fetch collections with their photos
-      const { data: collectionsData, error: collectionsError } = await supabase
-        .from('photo_collections')
-        .select(`
-          *,
-          photos (
-            id,
-            url,
-            caption,
-            order_index
-          )
-        `)
-        .order('date', { ascending: false });
-
-      if (collectionsError) throw collectionsError;
-
-      setCollections(collectionsData || []);
+      // Fetch collections from Supabase storage bucket
+      const fetchedCollections = await fetchPhotoCollections();
+      setCollections(fetchedCollections);
+      
+      if (fetchedCollections.length === 0) {
+        toast({
+          title: "No photos found",
+          description: "Upload photos to the Supabase bucket to display them here.",
+          variant: "default",
+        });
+      }
     } catch (error) {
       console.error('Error fetching collections:', error);
-      
-      // Use static data as fallback with personalized descriptions
-      setCollections([
-        {
-          id: '1',
-          title: 'Family RV Vacation',
-          description: 'Post graduation family RV trip to Yosemite and Carmel',
-          date: '2023-12-20',
-          category: 'family',
-          cover_image: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=800',
-          photos: [
-            { id: '1', url: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=800', caption: 'Starting our journey', order_index: 1 },
-            { id: '2', url: 'https://images.unsplash.com/photo-1543722530-d2c3201371e7?w=800', caption: 'Beautiful sunset from the RV', order_index: 2 },
-            { id: '3', url: 'https://images.unsplash.com/photo-1561361513-2d000a50f0dc?w=800', caption: 'Camping by the lake', order_index: 3 },
-            { id: '4', url: 'https://images.unsplash.com/photo-1533873984035-25970ab07461?w=800', caption: 'Family dinner in nature', order_index: 4 },
-            { id: '5', url: 'https://images.unsplash.com/photo-1568605115459-4b731184f961?w=800', caption: 'Morning coffee with a view', order_index: 5 }
-          ]
-        },
-        {
-          id: '2',
-          title: 'Mountain Hiking Adventure',
-          description: 'Joined friends on a 3 day trip a week in advance; ended up climbing a 14k ft mountain',
-          date: '2024-01-15',
-          category: 'travel',
-          cover_image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
-          photos: [
-            { id: '6', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', caption: 'Summit view at 14,000 ft', order_index: 1 },
-            { id: '7', url: 'https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=800', caption: 'Trail through the forest', order_index: 2 },
-            { id: '8', url: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800', caption: 'Rest at the peak', order_index: 3 }
-          ]
-        },
-        {
-          id: '3',
-          title: 'Venice Beach Sunset',
-          description: 'Sharing mate with friends in the beach',
-          date: '2023-10-05',
-          category: 'travel',
-          cover_image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
-          photos: [
-            { id: '9', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800', caption: 'Venice Beach at golden hour', order_index: 1 },
-            { id: '10', url: 'https://images.unsplash.com/photo-1533760881669-80db4d7b4c15?w=800', caption: 'Sharing mate with friends', order_index: 2 },
-            { id: '11', url: 'https://images.unsplash.com/photo-1515726657878-05d8c9025ab9?w=800', caption: 'Beach volleyball game', order_index: 3 }
-          ]
-        },
-        {
-          id: '4',
-          title: 'Building Ternary Device',
-          description: 'Hardware development project exploring ternary computing',
-          date: '2023-11-10',
-          category: 'hobbies',
-          cover_image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800',
-          photos: [
-            { id: '12', url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800', caption: 'Circuit board design', order_index: 1 },
-            { id: '13', url: 'https://images.unsplash.com/photo-1553406830-247e03c99a14?w=800', caption: 'Testing the prototype', order_index: 2 },
-            { id: '14', url: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800', caption: 'Programming the device', order_index: 3 }
-          ]
-        }
-      ]);
+      toast({
+        title: "Error loading photos",
+        description: "Failed to load photo collections. Using sample data.",
+        variant: "destructive",
+      });
     } finally {
       setLoading(false);
     }
@@ -133,13 +50,12 @@ const PersonalLife = () => {
     fetchCollections();
   }, []);
 
-  const handleUploadComplete = () => {
-    setUploadDialogOpen(false);
-    fetchCollections();
+  const handleRefresh = () => {
     toast({
-      title: "Success",
-      description: "Your photos have been uploaded successfully!",
+      title: "Refreshing",
+      description: "Fetching latest photos from storage...",
     });
+    fetchCollections();
   };
 
   const filteredCollections = activeCategory === "all" 
@@ -165,20 +81,15 @@ const PersonalLife = () => {
               Back to Menu
             </Button>
             
-            <Dialog open={uploadDialogOpen} onOpenChange={setUploadDialogOpen}>
-              <DialogTrigger asChild>
-                <Button variant="default" className="flex items-center gap-2">
-                  <Plus className="w-4 h-4" />
-                  Add Photos
-                </Button>
-              </DialogTrigger>
-              <DialogContent className="max-w-2xl max-h-[90vh] overflow-y-auto">
-                <DialogHeader>
-                  <DialogTitle>Create Photo Collection</DialogTitle>
-                </DialogHeader>
-                <PhotoUpload onUploadComplete={handleUploadComplete} />
-              </DialogContent>
-            </Dialog>
+            <Button 
+              variant="outline" 
+              onClick={handleRefresh}
+              disabled={loading}
+              className="flex items-center gap-2"
+            >
+              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+              Refresh Photos
+            </Button>
           </div>
 
           <div className="text-center mb-12">
@@ -231,10 +142,10 @@ const PersonalLife = () => {
                       <PhotoCollage
                         key={collection.id}
                         title={collection.title}
-                        description={collection.description || undefined}
-                        date={collection.date || undefined}
+                        description={collection.description}
+                        date={collection.date}
                         photos={collection.photos.sort((a, b) => a.order_index - b.order_index)}
-                        category={collection.category || undefined}
+                        category={collection.category}
                       />
                     ))}
                   </div>
@@ -242,13 +153,17 @@ const PersonalLife = () => {
                   <Card className="shadow-elegant">
                     <CardContent className="py-12 text-center">
                       <p className="text-muted-foreground mb-4">
-                        No photo collections in this category yet.
+                        No photo collections in this category.
+                      </p>
+                      <p className="text-sm text-muted-foreground">
+                        Photos are automatically loaded from your Supabase storage bucket.
                       </p>
                       <Button 
-                        variant="default" 
-                        onClick={() => setUploadDialogOpen(true)}
+                        variant="outline" 
+                        onClick={handleRefresh}
+                        className="mt-4"
                       >
-                        Add Your First Collection
+                        Refresh Collections
                       </Button>
                     </CardContent>
                   </Card>
@@ -256,6 +171,30 @@ const PersonalLife = () => {
               </TabsContent>
             </Tabs>
           </div>
+
+          {/* Storage Info Card */}
+          <Card className="shadow-elegant mb-8 border-dashed border-2">
+            <CardHeader>
+              <CardTitle className="text-lg">Photo Management</CardTitle>
+            </CardHeader>
+            <CardContent>
+              <p className="text-sm text-muted-foreground mb-3">
+                Photos are automatically fetched from your Supabase storage bucket.
+              </p>
+              <div className="space-y-2 text-sm text-muted-foreground">
+                <div>📁 <strong>Bucket:</strong> photos</div>
+                <div>🗂️ <strong>Organization:</strong> Create folders in your bucket to organize photos into collections</div>
+                <div>🖼️ <strong>Supported:</strong> JPG, PNG, GIF, WebP</div>
+                <div>♻️ <strong>Updates:</strong> Click "Refresh Photos" to load new images</div>
+              </div>
+              <div className="mt-4 p-3 bg-accent/5 rounded-lg">
+                <p className="text-xs text-muted-foreground">
+                  <strong>Tip:</strong> Name your folders descriptively (e.g., "family-rv-trip", "mountain-hiking") 
+                  for automatic categorization.
+                </p>
+              </div>
+            </CardContent>
+          </Card>
 
           {/* About Me Section */}
           <Card className="shadow-elegant">
