@@ -40,7 +40,7 @@ const WorkProjects = () => {
       githubUrl: "https://github.com/felipetala/weather-dashboard",
       liveUrl: "https://weather-dash-demo.com",
       files: ["Performance Report.pdf"]
-    }
+    },
     {
       id: 4,
       title: "Memristor-based Ternary Device",
@@ -51,7 +51,7 @@ const WorkProjects = () => {
       githubUrl: "https://github.com/felipetala/weather-dashboard",
       liveUrl: "https://weather-dash-demo.com",
       files: ["Performance Report.pdf"]
-    }
+    },
     {
       id: 5,
       title: "FIR Filter - PYNQ Z2",
@@ -62,7 +62,7 @@ const WorkProjects = () => {
       githubUrl: "https://github.com/felipetala/weather-dashboard",
       liveUrl: "https://weather-dash-demo.com",
       files: ["Performance Report.pdf"]
-    }
+    },
     {
       id: 6,
       title: "Traffic Light FSM - Artix A7",
@@ -73,7 +73,7 @@ const WorkProjects = () => {
       githubUrl: "https://github.com/felipetala/weather-dashboard",
       liveUrl: "https://weather-dash-demo.com",
       files: ["Performance Report.pdf"]
-    }
+    },
     {
       id: 8,
       title: "FPGA Drone ADC - CMOD A7",
@@ -84,7 +84,7 @@ const WorkProjects = () => {
       githubUrl: "https://github.com/felipetala/weather-dashboard",
       liveUrl: "https://weather-dash-demo.com",
       files: ["Performance Report.pdf"]
-    }
+    },
     {
       id: 9,
       title: "Smart Blackout Courtain",
@@ -95,7 +95,7 @@ const WorkProjects = () => {
       githubUrl: "https://github.com/felipetala/weather-dashboard",
       liveUrl: "https://weather-dash-demo.com",
       files: ["Performance Report.pdf"]
-    }
+    },
     {
       id: 10,
       title: "SideQuest - Homeless Food Delivery App",
