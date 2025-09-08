@@ -1,4 +1,5 @@
 import { supabase } from "@/integrations/supabase/client";
+import { PHOTO_COLLECTIONS, BUCKET_CONFIG } from "@/config/photo-collections";
 
 export interface StorageFile {
   name: string;
@@ -97,39 +98,29 @@ export function getPhotoUrl(filePath: string): string {
  */
 export async function fetchPhotoCollections(): Promise<PhotoCollection[]> {
   try {
-    // First, get all folders (collections)
-    const { data: folders, error: foldersError } = await supabase
-      .storage
-      .from('photos')
-      .list('', {
-        limit: 100,
-        offset: 0
-      });
-
-    if (foldersError) {
-      console.error('Error fetching folders:', foldersError);
-      return getDefaultCollections();
-    }
-
     const collections: PhotoCollection[] = [];
+    const ROOT_FOLDER = BUCKET_CONFIG.rootFolder;
 
-    // Process each folder as a collection
-    for (const folder of folders || []) {
-      // Skip if it's a file not a folder
-      if (folder.name && folder.name.includes('.')) continue;
-      
-      if (folder.name) {
-        // Fetch photos from this folder
+    // If using configured collections
+    if (PHOTO_COLLECTIONS.length > 0 && !BUCKET_CONFIG.autoDiscoverFolders) {
+      // Fetch only configured collections
+      for (const config of PHOTO_COLLECTIONS) {
+        if (!config.enabled) continue;
+
+        const folderPath = ROOT_FOLDER ? `${ROOT_FOLDER}/${config.folderName}` : config.folderName;
+        
+        // Fetch photos from this specific folder
         const { data: photos, error: photosError } = await supabase
           .storage
           .from('photos')
-          .list(folder.name, {
-            limit: 100,
-            offset: 0
+          .list(folderPath, {
+            limit: BUCKET_CONFIG.maxPhotosPerCollection,
+            offset: 0,
+            sortBy: { column: 'name', order: 'asc' }
           });
 
         if (photosError) {
-          console.error(`Error fetching photos from ${folder.name}:`, photosError);
+          console.error(`Error fetching photos from ${config.folderName}:`, photosError);
           continue;
         }
 
@@ -140,20 +131,85 @@ export async function fetchPhotoCollections(): Promise<PhotoCollection[]> {
 
         if (imageFiles.length > 0) {
           const collectionPhotos: Photo[] = imageFiles.map((file, index) => ({
-            id: file.id || `${folder.name}-${index}`,
-            url: getPhotoUrl(`${folder.name}/${file.name}`),
+            id: file.id || `${config.folderName}-${index}`,
+            url: getPhotoUrl(`${folderPath}/${file.name}`),
             caption: file.name.replace(/\.[^/.]+$/, "").replace(/-/g, ' '),
             order_index: index + 1
           }));
 
           collections.push({
-            id: folder.name,
-            title: formatFolderName(folder.name),
-            description: `Collection from ${folder.name}`,
-            date: folder.created_at || new Date().toISOString(),
-            category: determineCategoryFromName(folder.name),
+            id: config.folderName,
+            title: config.displayTitle,
+            description: config.description,
+            date: config.date || new Date().toISOString(),
+            category: config.category,
             photos: collectionPhotos
           });
+        }
+      }
+    } else {
+      // Auto-discover all folders (original behavior)
+      const { data: folders, error: foldersError } = await supabase
+        .storage
+        .from('photos')
+        .list(ROOT_FOLDER, {
+          limit: 100,
+          offset: 0
+        });
+
+      if (foldersError) {
+        console.error('Error fetching folders:', foldersError);
+        return getDefaultCollections();
+      }
+
+      // Process each folder as a collection
+      for (const folder of folders || []) {
+        // Skip if it's a file not a folder
+        if (folder.name && folder.name.includes('.')) continue;
+        
+        if (folder.name) {
+          // Check if this folder is configured
+          const config = PHOTO_COLLECTIONS.find(c => c.folderName === folder.name);
+          if (config && !config.enabled) continue; // Skip disabled collections
+
+          const folderPath = ROOT_FOLDER ? `${ROOT_FOLDER}/${folder.name}` : folder.name;
+          
+          // Fetch photos from this folder
+          const { data: photos, error: photosError } = await supabase
+            .storage
+            .from('photos')
+            .list(folderPath, {
+              limit: BUCKET_CONFIG.maxPhotosPerCollection,
+              offset: 0
+            });
+
+          if (photosError) {
+            console.error(`Error fetching photos from ${folder.name}:`, photosError);
+            continue;
+          }
+
+          // Filter out non-image files
+          const imageFiles = (photos || []).filter(file => 
+            file.name && /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
+          );
+
+          if (imageFiles.length > 0) {
+            const collectionPhotos: Photo[] = imageFiles.map((file, index) => ({
+              id: file.id || `${folder.name}-${index}`,
+              url: getPhotoUrl(`${folderPath}/${file.name}`),
+              caption: file.name.replace(/\.[^/.]+$/, "").replace(/-/g, ' '),
+              order_index: index + 1
+            }));
+
+            collections.push({
+              id: folder.name,
+              title: config?.displayTitle || formatFolderName(folder.name),
+              description: config?.description || `Collection from ${folder.name}`,
+              date: config?.date || folder.created_at || new Date().toISOString(),
+              category: config?.category || determineCategoryFromName(folder.name),
+              photos: collectionPhotos
+            });
+          }
         }
       }
     }
