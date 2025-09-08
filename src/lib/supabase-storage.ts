@@ -113,6 +113,20 @@ export function getPhotoUrl(filePath: string, options?: { width?: number; qualit
  */
 export async function fetchPhotoCollections(): Promise<PhotoCollection[]> {
   try {
+    // First, check if the bucket exists and is accessible
+    const { data: buckets, error: bucketError } = await supabase.storage.listBuckets();
+    
+    if (bucketError || !buckets || buckets.length === 0) {
+      console.warn('No storage buckets found or bucket access denied. Please configure Supabase storage.');
+      return getDefaultCollections();
+    }
+    
+    const photoBucket = buckets.find(b => b.name === 'photos');
+    if (!photoBucket) {
+      console.warn('Photos bucket not found. Please create a "photos" bucket in Supabase.');
+      return getDefaultCollections();
+    }
+    
     const collections: PhotoCollection[] = [];
     const ROOT_FOLDER = BUCKET_CONFIG.rootFolder;
 

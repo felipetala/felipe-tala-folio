@@ -146,7 +146,12 @@ const PersonalLife = () => {
             <Alert className="mb-6 border-orange-200 bg-orange-50">
               <AlertCircle className="h-4 w-4 text-orange-600" />
               <AlertDescription className="text-orange-800">
-                Currently showing sample photos. Connect to Supabase to display your actual photo collections.
+                <strong>Supabase bucket not configured.</strong> Currently showing sample photos.
+                <br />
+                To display your photos: Create a public 'photos' bucket in your Supabase project and upload images to folders:
+                family-rv-trip, venice-beach, longs-peak-co, diwali, family&friends.
+                <br />
+                See SUPABASE_SETUP.md for detailed instructions.
               </AlertDescription>
             </Alert>
           )}
