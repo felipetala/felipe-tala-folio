@@ -3,11 +3,12 @@ import { Button } from "@/components/ui/button";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Tabs, TabsContent, TabsList, TabsTrigger } from "@/components/ui/tabs";
 import { Alert, AlertDescription } from "@/components/ui/alert";
-import { ArrowLeft, Loader2, RefreshCw, AlertCircle, CheckCircle2 } from "lucide-react";
+import { ArrowLeft, Loader2, RefreshCw, AlertCircle, CheckCircle2, Bug } from "lucide-react";
 import { useNavigate } from "react-router-dom";
 import { useToast } from "@/hooks/use-toast";
 import PhotoCollage from "@/components/PhotoCollage";
 import { fetchPhotoCollections, PhotoCollection } from "@/lib/supabase-storage";
+import { testSupabaseConnection } from "@/lib/supabase-test";
 
 const PersonalLife = () => {
   const navigate = useNavigate();
@@ -61,6 +62,10 @@ const PersonalLife = () => {
   };
 
   useEffect(() => {
+    // Run diagnostic test in development
+    if (process.env.NODE_ENV === 'development' || window.location.search.includes('debug')) {
+      testSupabaseConnection();
+    }
     fetchCollections();
   }, []);
 
@@ -95,15 +100,36 @@ const PersonalLife = () => {
               Back to Menu
             </Button>
             
-            <Button 
-              variant="outline" 
-              onClick={handleRefresh}
-              disabled={loading}
-              className="flex items-center gap-2"
-            >
-              <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
-              Refresh Photos
-            </Button>
+            <div className="flex gap-2">
+              <Button 
+                variant="outline" 
+                onClick={handleRefresh}
+                disabled={loading}
+                className="flex items-center gap-2"
+              >
+                <RefreshCw className={`w-4 h-4 ${loading ? 'animate-spin' : ''}`} />
+                Refresh Photos
+              </Button>
+              
+              {/* Debug button - only show in development or with ?debug in URL */}
+              {(process.env.NODE_ENV === 'development' || window.location.search.includes('debug')) && (
+                <Button 
+                  variant="outline" 
+                  onClick={() => {
+                    console.clear();
+                    testSupabaseConnection();
+                    toast({
+                      title: "Running diagnostics",
+                      description: "Check browser console for results",
+                    });
+                  }}
+                  className="flex items-center gap-2"
+                >
+                  <Bug className="w-4 h-4" />
+                  Debug
+                </Button>
+              )}
+            </div>
           </div>
 
           <div className="text-center mb-12">
