@@ -85,10 +85,16 @@ export async function fetchPhotosFromFolder(folderPath: string): Promise<Storage
  * Adds image transformation parameters for optimization
  */
 export function getPhotoUrl(filePath: string, options?: { width?: number; quality?: number }): string {
+  // Clean the file path - remove leading slashes
+  const cleanPath = filePath.replace(/^\/+/, '');
+  
   const { data } = supabase
     .storage
     .from('photos')
-    .getPublicUrl(filePath);
+    .getPublicUrl(cleanPath);
+  
+  // Log the URL for debugging
+  console.log(`Generated URL for ${cleanPath}: ${data.publicUrl}`);
   
   // Add transformation parameters for optimization
   if (options?.width || options?.quality) {
@@ -119,6 +125,7 @@ export async function fetchPhotoCollections(): Promise<PhotoCollection[]> {
         const folderPath = ROOT_FOLDER ? `${ROOT_FOLDER}/${config.folderName}` : config.folderName;
         
         // Fetch photos from this specific folder
+        console.log(`Fetching from folder: ${folderPath}`);
         const { data: photos, error: photosError } = await supabase
           .storage
           .from('photos')
@@ -133,10 +140,14 @@ export async function fetchPhotoCollections(): Promise<PhotoCollection[]> {
           continue;
         }
 
+        console.log(`Found ${photos?.length || 0} items in ${config.folderName}`);
+        
         // Filter out non-image files
         const imageFiles = (photos || []).filter(file => 
           file.name && /\.(jpg|jpeg|png|gif|webp)$/i.test(file.name)
         );
+
+        console.log(`Found ${imageFiles.length} image files in ${config.folderName}`);
 
         if (imageFiles.length > 0) {
           const collectionPhotos: Photo[] = imageFiles.map((file, index) => ({
@@ -223,9 +234,10 @@ export async function fetchPhotoCollections(): Promise<PhotoCollection[]> {
       }
     }
 
-    // If no collections found, return default collections
+    // If no collections found, try direct URL approach as fallback
     if (collections.length === 0) {
-      return getDefaultCollections();
+      console.log('No collections found via list API, trying direct URL approach...');
+      return await fetchPhotoCollectionsDirect();
     }
 
     return collections;
@@ -254,6 +266,91 @@ function determineCategoryFromName(folderName: string): string {
   if (name.includes('event') || name.includes('conference')) return 'events';
   if (name.includes('hobby') || name.includes('project')) return 'hobbies';
   return 'other';
+}
+
+/**
+ * Fallback method: Try to fetch collections using direct URLs
+ * This works when list permissions are restricted but public read is allowed
+ */
+async function fetchPhotoCollectionsDirect(): Promise<PhotoCollection[]> {
+  console.log('Attempting direct URL approach for photo collections...');
+  const collections: PhotoCollection[] = [];
+  
+  // Common image filenames to try
+  const commonImageNames = [
+    '1.jpg', '2.jpg', '3.jpg', '4.jpg', '5.jpg',
+    '01.jpg', '02.jpg', '03.jpg', '04.jpg', '05.jpg',
+    'image1.jpg', 'image2.jpg', 'image3.jpg',
+    'photo1.jpg', 'photo2.jpg', 'photo3.jpg',
+    'IMG_0001.jpg', 'IMG_0002.jpg', 'IMG_0003.jpg',
+    '1.png', '2.png', '3.png',
+    '1.jpeg', '2.jpeg', '3.jpeg'
+  ];
+
+  for (const config of PHOTO_COLLECTIONS) {
+    if (!config.enabled) continue;
+    
+    const folderPath = config.folderName;
+    const validPhotos: Photo[] = [];
+    
+    // Try to load images with common naming patterns
+    for (const imageName of commonImageNames) {
+      const imageUrl = getPhotoUrl(`${folderPath}/${imageName}`);
+      
+      // Test if image exists by creating a promise that resolves when image loads
+      try {
+        const exists = await testImageExists(imageUrl);
+        if (exists) {
+          validPhotos.push({
+            id: `${config.folderName}-${validPhotos.length}`,
+            url: imageUrl,
+            caption: imageName.replace(/\.[^/.]+$/, "").replace(/-/g, ' ').replace(/_/g, ' '),
+            order_index: validPhotos.length + 1
+          });
+          
+          // Stop after finding 5 images per folder
+          if (validPhotos.length >= 5) break;
+        }
+      } catch (e) {
+        // Image doesn't exist, continue
+      }
+    }
+    
+    if (validPhotos.length > 0) {
+      console.log(`Found ${validPhotos.length} photos in ${config.folderName} via direct URL`);
+      collections.push({
+        id: config.folderName,
+        title: config.displayTitle,
+        description: config.description,
+        date: config.date || new Date().toISOString(),
+        category: config.category,
+        photos: validPhotos
+      });
+    }
+  }
+  
+  // If still no collections, return defaults
+  if (collections.length === 0) {
+    console.log('Direct URL approach also failed, returning default collections');
+    return getDefaultCollections();
+  }
+  
+  return collections;
+}
+
+/**
+ * Test if an image URL is accessible
+ */
+function testImageExists(url: string): Promise<boolean> {
+  return new Promise((resolve) => {
+    const img = new Image();
+    img.onload = () => resolve(true);
+    img.onerror = () => resolve(false);
+    img.src = url;
+    
+    // Timeout after 5 seconds
+    setTimeout(() => resolve(false), 5000);
+  });
 }
 
 /**
