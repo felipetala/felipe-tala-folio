@@ -40,7 +40,7 @@ const PersonalLife = () => {
   const [activeCategory, setActiveCategory] = useState("all");
 
   const interests = [
-    "Photography", "Hiking", "Cooking", "Travel", "Music", "Reading", "Gaming", "Fitness"
+    "Hardware development", "Reading", "Jogging", "Travel", "Martial Arts", "Rock Climbing"
   ];
 
   const fetchCollections = async () => {
@@ -67,14 +67,14 @@ const PersonalLife = () => {
     } catch (error) {
       console.error('Error fetching collections:', error);
       
-      // Use static data as fallback
+      // Use static data as fallback with personalized descriptions
       setCollections([
         {
           id: '1',
-          title: 'RV Family Adventure',
-          description: 'Amazing cross-country trip with the family in our RV',
-          date: '2024-07-15',
-          category: 'travel',
+          title: 'Family RV Vacation',
+          description: 'Post graduation family RV trip to Yosemite and Carmel',
+          date: '2023-12-20',
+          category: 'family',
           cover_image: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=800',
           photos: [
             { id: '1', url: 'https://images.unsplash.com/photo-1523987355523-c7b5b0dd90a7?w=800', caption: 'Starting our journey', order_index: 1 },
@@ -86,42 +86,41 @@ const PersonalLife = () => {
         },
         {
           id: '2',
-          title: 'Mountain Hiking Trip',
-          description: 'Weekend getaway to the Rockies',
-          date: '2024-06-20',
+          title: 'Mountain Hiking Adventure',
+          description: 'Joined friends on a 3 day trip a week in advance; ended up climbing a 14k ft mountain',
+          date: '2024-01-15',
           category: 'travel',
           cover_image: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800',
           photos: [
-            { id: '6', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', caption: 'Summit view', order_index: 1 },
+            { id: '6', url: 'https://images.unsplash.com/photo-1506905925346-21bda4d32df4?w=800', caption: 'Summit view at 14,000 ft', order_index: 1 },
             { id: '7', url: 'https://images.unsplash.com/photo-1454391304352-2bf4678b1a7a?w=800', caption: 'Trail through the forest', order_index: 2 },
             { id: '8', url: 'https://images.unsplash.com/photo-1519904981063-b0cf448d479e?w=800', caption: 'Rest at the peak', order_index: 3 }
           ]
         },
         {
           id: '3',
-          title: 'Tech Conference 2024',
-          description: 'Speaking at the annual developers conference',
-          date: '2024-03-10',
-          category: 'events',
-          cover_image: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800',
+          title: 'Venice Beach Sunset',
+          description: 'Sharing mate with friends in the beach',
+          date: '2023-10-05',
+          category: 'travel',
+          cover_image: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800',
           photos: [
-            { id: '9', url: 'https://images.unsplash.com/photo-1540575467063-178a50c2df87?w=800', caption: 'Main stage presentation', order_index: 1 },
-            { id: '10', url: 'https://images.unsplash.com/photo-1591115765373-5207764f72e7?w=800', caption: 'Networking session', order_index: 2 },
-            { id: '11', url: 'https://images.unsplash.com/photo-1475721027785-f74eccf877e2?w=800', caption: 'Workshop time', order_index: 3 },
-            { id: '12', url: 'https://images.unsplash.com/photo-1505373877841-8d25f7d46678?w=800', caption: 'Panel discussion', order_index: 4 }
+            { id: '9', url: 'https://images.unsplash.com/photo-1507525428034-b723cf961d3e?w=800', caption: 'Venice Beach at golden hour', order_index: 1 },
+            { id: '10', url: 'https://images.unsplash.com/photo-1533760881669-80db4d7b4c15?w=800', caption: 'Sharing mate with friends', order_index: 2 },
+            { id: '11', url: 'https://images.unsplash.com/photo-1515726657878-05d8c9025ab9?w=800', caption: 'Beach volleyball game', order_index: 3 }
           ]
         },
         {
           id: '4',
-          title: 'Cooking Adventures',
-          description: 'Experiments in the kitchen',
-          date: '2024-02-15',
+          title: 'Building Ternary Device',
+          description: 'Hardware development project exploring ternary computing',
+          date: '2023-11-10',
           category: 'hobbies',
-          cover_image: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800',
+          cover_image: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800',
           photos: [
-            { id: '13', url: 'https://images.unsplash.com/photo-1556909114-f6e7ad7d3136?w=800', caption: 'Homemade pasta', order_index: 1 },
-            { id: '14', url: 'https://images.unsplash.com/photo-1565299624946-b28f40a0ae38?w=800', caption: 'Pizza night', order_index: 2 },
-            { id: '15', url: 'https://images.unsplash.com/photo-1546069901-ba9599a7e63c?w=800', caption: 'Healthy salad creation', order_index: 3 }
+            { id: '12', url: 'https://images.unsplash.com/photo-1518770660439-4636190af475?w=800', caption: 'Circuit board design', order_index: 1 },
+            { id: '13', url: 'https://images.unsplash.com/photo-1553406830-247e03c99a14?w=800', caption: 'Testing the prototype', order_index: 2 },
+            { id: '14', url: 'https://images.unsplash.com/photo-1571171637578-41bc2dd41cd2?w=800', caption: 'Programming the device', order_index: 3 }
           ]
         }
       ]);
@@ -265,11 +264,12 @@ const PersonalLife = () => {
             </CardHeader>
             <CardContent>
               <p className="text-muted-foreground leading-relaxed">
-                When I'm not coding, you'll find me exploring the great outdoors, experimenting in the kitchen, 
-                or capturing life's beautiful moments through photography. I believe in maintaining a healthy 
-                work-life balance and am passionate about continuous learning, whether it's mastering a new 
-                programming language or trying a new hiking trail. Family and friends are incredibly important 
-                to me, and I love creating lasting memories with the people I care about most.
+                Outside of the lab and office, you'll find me sharing conversations and mate with friends, reading,
+                meditating, or jogging. I believe in maintaining a healthy mind to overperform and achieve working
+                flow state. I am passionate about continuous learning, whether it's mastering a new 
+                development skill or trying a new jogging path. Novelty keeps the mind fresh, creative and active.
+                Family and friends are incredibly important to me, and I love being conscious of when we are
+                living a lasting memory with the people I care about most.
               </p>
             </CardContent>
           </Card>

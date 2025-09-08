@@ -10,7 +10,7 @@ const WorkProjects = () => {
   const projects = [
     {
       id: 1,
-      title: "E-Commerce Platform",
+      title: "Opitcal Transceiver",
       description: "A full-stack e-commerce solution built with React, Node.js, and PostgreSQL. Features include user authentication, payment processing, and admin dashboard.",
       technologies: ["React", "Node.js", "PostgreSQL", "Stripe", "AWS"],
       status: "Completed",
@@ -21,10 +21,10 @@ const WorkProjects = () => {
     },
     {
       id: 2,
-      title: "Task Management App",
+      title: "Linear Power Supply",
       description: "A collaborative task management application with real-time updates, team collaboration features, and advanced analytics.",
       technologies: ["React", "TypeScript", "Firebase", "Material-UI"],
-      status: "In Progress",
+      status: "Completed",
       image: "/placeholder.svg",
       githubUrl: "https://github.com/felipetala/task-manager",
       liveUrl: null,
@@ -32,10 +32,76 @@ const WorkProjects = () => {
     },
     {
       id: 3,
-      title: "Weather Dashboard",
+      title: "Audio Visualizer",
       description: "A responsive weather dashboard that displays current conditions and forecasts with beautiful data visualizations.",
       technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
       status: "Completed",
+      image: "/placeholder.svg",
+      githubUrl: "https://github.com/felipetala/weather-dashboard",
+      liveUrl: "https://weather-dash-demo.com",
+      files: ["Performance Report.pdf"]
+    }
+    {
+      id: 4,
+      title: "Memristor-based Ternary Device",
+      description: "A responsive weather dashboard that displays current conditions and forecasts with beautiful data visualizations.",
+      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      status: "In progress",
+      image: "/placeholder.svg",
+      githubUrl: "https://github.com/felipetala/weather-dashboard",
+      liveUrl: "https://weather-dash-demo.com",
+      files: ["Performance Report.pdf"]
+    }
+    {
+      id: 5,
+      title: "FIR Filter - PYNQ Z2",
+      description: "A responsive weather dashboard that displays current conditions and forecasts with beautiful data visualizations.",
+      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      status: "In progress",
+      image: "/placeholder.svg",
+      githubUrl: "https://github.com/felipetala/weather-dashboard",
+      liveUrl: "https://weather-dash-demo.com",
+      files: ["Performance Report.pdf"]
+    }
+    {
+      id: 6,
+      title: "Traffic Light FSM - Artix A7",
+      description: "A responsive weather dashboard that displays current conditions and forecasts with beautiful data visualizations.",
+      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      status: "In progress",
+      image: "/placeholder.svg",
+      githubUrl: "https://github.com/felipetala/weather-dashboard",
+      liveUrl: "https://weather-dash-demo.com",
+      files: ["Performance Report.pdf"]
+    }
+    {
+      id: 8,
+      title: "FPGA Drone ADC - CMOD A7",
+      description: "A responsive weather dashboard that displays current conditions and forecasts with beautiful data visualizations.",
+      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      status: "In progress",
+      image: "/placeholder.svg",
+      githubUrl: "https://github.com/felipetala/weather-dashboard",
+      liveUrl: "https://weather-dash-demo.com",
+      files: ["Performance Report.pdf"]
+    }
+    {
+      id: 9,
+      title: "Smart Blackout Courtain",
+      description: "A responsive weather dashboard that displays current conditions and forecasts with beautiful data visualizations.",
+      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      status: "In progress",
+      image: "/placeholder.svg",
+      githubUrl: "https://github.com/felipetala/weather-dashboard",
+      liveUrl: "https://weather-dash-demo.com",
+      files: ["Performance Report.pdf"]
+    }
+    {
+      id: 10,
+      title: "SideQuest - Homeless Food Delivery App",
+      description: "A responsive weather dashboard that displays current conditions and forecasts with beautiful data visualizations.",
+      technologies: ["Vue.js", "Chart.js", "OpenWeather API", "Tailwind CSS"],
+      status: "In progress",
       image: "/placeholder.svg",
       githubUrl: "https://github.com/felipetala/weather-dashboard",
       liveUrl: "https://weather-dash-demo.com",
