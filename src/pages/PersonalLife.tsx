@@ -205,8 +205,11 @@ const PersonalLife = () => {
               <p className="text-muted-foreground leading-relaxed">
                 Outside of the lab and office, you'll find me sharing conversations and mate with friends, reading,
                 meditating, or jogging. I believe in maintaining a healthy mind to overperform and achieve working
-                flow state. I am passionate about continuous learning, whether it's mastering a new 
+                flow state.
+                
+                I am passionate about continuous learning, whether it's mastering a new 
                 development skill or trying a new jogging path. Novelty keeps the mind fresh, creative and active.
+                
                 Family and friends are incredibly important to me, and I love being conscious of when we are
                 living a lasting memory with the people I care about most.
               </p>
