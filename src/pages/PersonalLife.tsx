@@ -147,10 +147,11 @@ const PersonalLife = () => {
               <AlertCircle className="h-4 w-4 text-orange-600" />
               <AlertDescription className="text-orange-800">
                 <strong>Supabase bucket not configured.</strong> Currently showing sample photos.
-                <br />
-                To display your photos: Create a public 'photos' bucket in your Supabase project and upload images to folders:
-                family-rv-trip, venice-beach, longs-peak-co, diwali, family&friends.
-                <br />
+                <a 
+                href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/photos/family-rv-trip/family-rv-trip.jpg`}
+                download="Resume_Felipe_Tala.pdf"
+                className="flex items-center gap-2"
+                >
                 See SUPABASE_SETUP.md for detailed instructions.
               </AlertDescription>
             </Alert>
