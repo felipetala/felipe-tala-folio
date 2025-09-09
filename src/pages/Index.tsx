@@ -57,7 +57,7 @@ const Index = () => {
             Welcome to Felipe Tala's personal webpage
           </h1>
           <p className="text-xl md:text-2xl text-white/90 mb-16 max-w-3xl mx-auto">
-            Software Developer • Problem Solver • Lifelong Learner
+            Hardware Developer • Problem Solver • Adaptable Learner
           </p>
 
           {/* Menu Grid */}
