@@ -149,10 +149,9 @@ const PersonalLife = () => {
                 <strong>Supabase bucket not configured.</strong> Currently showing sample photos.
                 <a 
                 href={`https://qvryaynijbfizvsghwko.supabase.co/storage/v1/object/public/photos/family-rv-trip/family-rv-trip.jpg`}
-                download="Resume_Felipe_Tala.pdf"
+                download="family-rv-trip.jpg"
                 className="flex items-center gap-2"
                 >
-                See SUPABASE_SETUP.md for detailed instructions.
               </AlertDescription>
             </Alert>
           )}
@@ -285,5 +284,3 @@ const PersonalLife = () => {
     </div>
   );
 };
-
-export default PersonalLife;
